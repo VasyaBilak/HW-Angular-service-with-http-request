@@ -1,0 +1,100 @@
+<div class="container mt-3 mb-3">
+  <div class="row">
+    <div class="col-2">
+      <button type="button" class="btn btn-dark w-100 text-start">Blogs</button>
+    </div>
+
+    <div class="col-10">
+      <form>
+        <div class="input-group mb-3">
+          <input
+            name="title"
+            type="text"
+            class="form-control"
+            placeholder="title here..."
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            [(ngModel)]="title"
+          />
+        </div>
+        <textarea
+          name="text"
+          id="text"
+          class="form-control mb-3"
+          placeholder="text here.."
+          [(ngModel)]="text"
+        ></textarea>
+        <div class="input-group mb-3">
+          <input
+            name="author"
+            type="text"
+            class="form-control"
+            placeholder="author here..."
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            [(ngModel)]="author"
+          />
+        </div>
+        <button
+          type="button"
+          class="btn btn-dark"
+          *ngIf="!editStatus"
+          (click)="addBlog()"
+        >
+          Add
+        </button>
+        <button
+          *ngIf="editStatus"
+          type="button"
+          class="btn btn-light"
+          (click)="saveBlog()"
+        >
+          Save edit
+        </button>
+      </form>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Text</th>
+            <th scope="col">Author</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let blog of adminBlogs">
+            <td>{{ blog.id }}</td>
+            <td>{{ blog.title }}</td>
+            <td>
+              {{ blog.text | slice : 0 : 60 }}
+              <span *ngIf="blog.text.length > 60">...</span>
+            </td>
+            <td>{{ blog.author }}</td>
+            <td>
+              <button
+                (click)="editBlog(blog)"
+                type="button"
+                class="btn btn-dark me-2"
+              >
+                Edit 
+              </button>
+            </td>
+            <td>
+                <button
+                [disabled]="editStatus"
+                (click)="deleteBlog(blog)"
+                type="button"
+                class="btn btn-dark"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
